@@ -34,9 +34,9 @@ type IGMarkets struct {
 }
 
 type stock struct {
-	Ticker string  `json:"ticker"`
-	Price  float64 `json:"price"`
-	Date   string  `json:"date"`
+	Ticker string         `json:"ticker"`
+	Price  *PriceResponse `json:"priceResponse"`
+	Date   string         `json:"date"`
 }
 
 // New - Create new instance of igmarkets
@@ -122,7 +122,7 @@ func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []stock) { //Måst
 	for {
 		prices, error := ig.GetPrice(ctx, "CS.D.EURUSD.CFD.IP")
 		if error == nil {
-			temp_AAPL := stock{Ticker: "EURUSD", Price: prices.Prices[0].ClosePrice.Ask, Date: time.DateOnly}
+			temp_AAPL := stock{Ticker: "EURUSD", Price: prices, Date: time.DateOnly}
 			temp = append(temp, temp_AAPL)
 		}
 		time.Sleep(time.Second)
