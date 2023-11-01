@@ -33,7 +33,7 @@ type IGMarkets struct {
 	sync.RWMutex
 }
 
-type stock struct {
+type Stock struct {
 	Ticker string
 	Price  *PriceResponse
 	Date   string
@@ -118,11 +118,11 @@ func (ig *IGMarkets) doRequestWithResponseHeaders(ctx context.Context, req *http
 	return igResponse, resp.Header, nil
 }
 
-func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []stock) { //Måste fundera ifall det ska vara i mitt uppdaterade API eller om man inte ska göra saker så nested?
+func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []Stock) { //Måste fundera ifall det ska vara i mitt uppdaterade API eller om man inte ska göra saker så nested?
 	for {
 		prices, error := ig.GetPrice(ctx, "CS.D.EURUSD.CFD.IP")
 		if error == nil {
-			temp_AAPL := stock{Ticker: "EURUSD", Price: prices, Date: time.DateOnly}
+			temp_AAPL := Stock{Ticker: "EURUSD", Price: prices, Date: time.DateOnly}
 			temp = append(temp, temp_AAPL)
 		}
 		time.Sleep(time.Second)
