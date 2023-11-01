@@ -39,6 +39,10 @@ type Stock struct {
 	Date   string
 }
 
+func (stock *Stock) returnstock(Stock interface{}) interface{} {
+	return stock
+}
+
 // New - Create new instance of igmarkets
 func New(apiURL, apiKey, accountID, identifier, password string) *IGMarkets {
 	if apiURL != DemoAPIURL && apiURL != LiveAPIURL {
