@@ -39,10 +39,11 @@ type Stock struct {
 	Date   string
 }
 
+/*
 func (stock *Stock) returnstock(Stock interface{}) interface{} {
 	return stock
 }
-
+*/
 // New - Create new instance of igmarkets
 func New(apiURL, apiKey, accountID, identifier, password string) *IGMarkets {
 	if apiURL != DemoAPIURL && apiURL != LiveAPIURL {
@@ -122,11 +123,11 @@ func (ig *IGMarkets) doRequestWithResponseHeaders(ctx context.Context, req *http
 	return igResponse, resp.Header, nil
 }
 
-func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []Stock) { //Måste fundera ifall det ska vara i mitt uppdaterade API eller om man inte ska göra saker så nested?
+func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []Stock, ticker_ig string, ticker string) {
 	for {
-		prices, error := ig.GetPrice(ctx, "CS.D.EURUSD.CFD.IP")
+		prices, error := ig.GetPrice(ctx, ticker_ig)
 		if error == nil {
-			temp_AAPL := Stock{Ticker: "EURUSD", Price: prices, Date: time.DateOnly}
+			temp_AAPL := Stock{Ticker: ticker, Price: prices, Date: time.DateOnly}
 			temp = append(temp, temp_AAPL)
 		}
 		time.Sleep(time.Second)
