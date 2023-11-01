@@ -34,9 +34,9 @@ type IGMarkets struct {
 }
 
 type stock struct {
-	Ticker string         `json:"ticker"`
-	Price  *PriceResponse `json:"price"`
-	Date   string         `json:"date"`
+	Ticker string
+	Price  *PriceResponse
+	Date   string
 }
 
 // New - Create new instance of igmarkets
